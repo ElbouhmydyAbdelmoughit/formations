@@ -9,8 +9,13 @@ app.use(express.json())
 
 app.post('/user',async(req,res)=>{
   const {name} = req.body
-  const user = await User.create({name})
-  res.json({message:user})
+  try {
+    const user = await User.create({name})
+    res.json({message:user})
+    
+  } catch (error) {
+    res.json({message:error.message} )
+  }
 })
 
 
