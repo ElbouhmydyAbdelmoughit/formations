@@ -1,12 +1,10 @@
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
 const User = require('./model/User')
 const env = require('dotenv').config()
-const db_config = require('./config/db.config') 
+const { error, success } = require("consola");
+const dbConfig = require('./config/dbConfig') 
 
-
-// console.log(dotenv)
 app.use(express.json())
 
 app.post('/user',async(req,res)=>{
@@ -18,5 +16,5 @@ app.post('/user',async(req,res)=>{
 
 
 app.listen(process.env.PORT,()=>{
-  console.log(`port runing ${process.env.PORT}`)
+  success({message:`port runing ${process.env.PORT}`,badge:true})
 })
