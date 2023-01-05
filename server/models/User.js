@@ -14,6 +14,10 @@ const userShema = mongoose.Schema({
   hash_password:{
     type:String,
   },
+  role:{
+    type:String,
+    default:"employee"
+  },
   organisme_id:{
     type:String,
   },

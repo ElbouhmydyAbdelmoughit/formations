@@ -1,31 +1,39 @@
-const express = require("express");
 const User = require("../models/User");
-const bcrypt = require("bcryptjs");
-const dotenv = require("dotenv");
-// const cookie = require("cookie-parser");
+require("dotenv").config();
 const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
 
-
-const Register = async (req, res) => {
-  let { body } = req;
-  try {
-    const userExist = await User.findOne({ email: body.email });
-    if (userExist) {
-      throw res.send("This Email already exist");
-    } else {
-      const errors = validationResult(req)
-      if( errors.isEmpty()){
-        let user = await User.create({ ...body });
-        res.send(user);
-      }else {
-        throw res.send(errors.errors[0].msg)
-      }
-    }
-  } catch (error) {
-    res.send(error.message)
+const Login = (req, res) => {
+  let errors = validationResult(req);
+  if (errors.isEmpty()) {
+    User.aggregate([{ $match: { email: req.body.email } }])
+      .then((data) => {
+        if (data.length > 0) {
+          const token = jwt.sign(
+            {
+              name: data[0].name,
+              email: data[0].email,
+              role: data[0].role,
+            },
+            process.env.TOKEN_SECRET,
+            { expiresIn: "1800s" }
+          );
+          const VT = jwt.verify(token, process.env.TOKEN_SECRET);
+          res.send(VT);
+        } else {
+          res.status(400).send("User not found");
+          return;
+        }
+      })
+      .catch((err) => {
+        res.status(400).send(err);
+        return;
+      });
+  } else {
+    res.send("form required");
   }
 };
-const Login = async (req, res) => {};
+
 const Logout = async (req, res) => {};
 
-module.exports = { Register, Login, Logout };
+module.exports = { Login, Logout };
