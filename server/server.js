@@ -6,7 +6,7 @@ const { error, success } = require("consola");
 const dbConfig = require("./config/dbConfig");
 const cors = require("cors");
 const authRouter = require("./routers/authRouter");
-const ErrorHandler  = require("./middlewares/errorHandling/ErrorHandling");
+const ErrorHandler  = require("./middlewares/errorHandling/errorHandling");
 
 app.use(
   cors({
