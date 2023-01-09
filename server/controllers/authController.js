@@ -20,9 +20,9 @@ const Login = async (req, res, next) => {
             process.env.TOKEN_SECRET,
             { expiresIn: "1800s" }
           );
-          res.json({ token: token });
-        }else {
-          throw new Error('Password incorrect')
+          res.json({success:true, token: token });
+        } else {
+          throw new Error("Password incorrect");
         }
       } else {
         throw new Error("Use Not Found");

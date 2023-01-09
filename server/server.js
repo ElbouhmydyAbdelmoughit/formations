@@ -5,7 +5,7 @@ const { success } = require("consola");
 require("./config/dbConfig");
 const cors = require("cors");
 const authRouter = require("./routers/authRouter");
-const ErrorHandler  = require("./middlewares/errorHandling/errorHandling");
+const ErrorHandler = require("./middlewares/errorHandling/errorHandling");
 const { post } = require("./routers/authRouter");
 
 app.use(
@@ -15,11 +15,10 @@ app.use(
   })
 );
 
-
 app.use(express.json());
 app.use("/auth", authRouter);
 
-app.use(ErrorHandler)
+app.use(ErrorHandler);
 
 app.listen(process.env.PORT, () => {
   success({ message: `port runing ${process.env.PORT}`, badge: true });

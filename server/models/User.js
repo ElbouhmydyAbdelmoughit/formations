@@ -21,10 +21,6 @@ const userShema = mongoose.Schema({
   organisme_id:{
     type:String,
   },
-  role_id:{
-    type:String,
-    unique: true,
-  },
   formation_id:{
     type:String,
   }

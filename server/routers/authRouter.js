@@ -5,8 +5,8 @@ const { check } = require("express-validator");
 authRouter.post(
   "/login",
   [
-    check("email","Email is Requered").trim().notEmpty().escape().isEmail() ,
-    check("hash_password","Password is required")
+    check("email", "Email is Requered").trim().notEmpty().isEmail(),
+    check("password", "Password is required")
       .trim()
       .notEmpty()
       .escape()
@@ -14,6 +14,5 @@ authRouter.post(
   ],
   Login
 );
-
 
 module.exports = authRouter;
