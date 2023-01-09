@@ -1,12 +1,12 @@
 const express = require("express");
 const app = express();
-const User = require("./models/User");
-const env = require("dotenv").config();
-const { error, success } = require("consola");
-const dbConfig = require("./config/dbConfig");
+require("dotenv").config();
+const { success } = require("consola");
+require("./config/dbConfig");
 const cors = require("cors");
 const authRouter = require("./routers/authRouter");
 const ErrorHandler  = require("./middlewares/errorHandling/errorHandling");
+const { post } = require("./routers/authRouter");
 
 app.use(
   cors({
@@ -14,8 +14,11 @@ app.use(
     methods: ["POST", "GET", "DELETE", "PUT"],
   })
 );
+
+
 app.use(express.json());
 app.use("/auth", authRouter);
+
 app.use(ErrorHandler)
 
 app.listen(process.env.PORT, () => {

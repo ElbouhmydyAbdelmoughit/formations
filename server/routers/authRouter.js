@@ -5,8 +5,8 @@ const { check } = require("express-validator");
 authRouter.post(
   "/login",
   [
-    check("email").trim().notEmpty().escape().isEmail() ,
-    check("hash_password")
+    check("email","Email is Requered").trim().notEmpty().escape().isEmail() ,
+    check("hash_password","Password is required")
       .trim()
       .notEmpty()
       .escape()

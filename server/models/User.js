@@ -11,7 +11,7 @@ const userShema = mongoose.Schema({
   phone:{
     type:Number,
   },
-  hash_password:{
+  password:{
     type:String,
   },
   role:{
