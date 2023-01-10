@@ -7,4 +7,4 @@ const organismeSchema = mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('oranisme',organismeSchema)
+module.exports = mongoose.model('Organisme',organismeSchema)
