@@ -8,9 +8,6 @@ const userShema = mongoose.Schema({
     type:String,
     unique: true,
   },
-  phone:{
-    type:Number,
-  },
   password:{
     type:String,
   },
@@ -18,12 +15,9 @@ const userShema = mongoose.Schema({
     type:String,
     default:"employee"
   },
-  organisme_id:{
+  organisme:{
     type:String,
   },
-  formation_id:{
-    type:String,
-  }
 })
 
 module.exports = mongoose.model('User',userShema)

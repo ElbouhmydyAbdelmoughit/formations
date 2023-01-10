@@ -36,4 +36,12 @@ const Login = async (req, res, next) => {
   }
 };
 
+// const addUser = (req,res,next) =>{
+//   try {
+//     const 
+//   } catch (error) {
+//     next(error)
+//   }
+// }
+
 module.exports = Login;
