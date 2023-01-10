@@ -14,8 +14,8 @@ const add = async (req, res, next) => {
           name: req.body.name,
         });
         if (organizme) {
-          const organizmeSaved = await organizme.save();
-          res.send(organizmeSaved);
+          await organizme.save();
+          res.send("Organizme Created Success");
         }
       } else {
         throw new Error("This Organisme Aleardy Exist");
