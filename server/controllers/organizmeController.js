@@ -5,8 +5,10 @@ const add = async (req, res, next) => {
   const errors = validationResult(req);
   try {
     if (errors.isEmpty()) {
-      const organismeExist = await Organizme.findOne({ name: req.body.name });
-      if (!organismeExist) {
+      const organismeExist = await Organizme.aggregate([
+        { $match: { name: req.body.name } },
+      ]);
+      if (organismeExist.length <= 0) {
         console.log("test");
         const organizme = await new Organizme({
           name: req.body.name,
