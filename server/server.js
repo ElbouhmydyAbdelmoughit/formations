@@ -5,8 +5,9 @@ const { success } = require("consola");
 require("./config/dbConfig");
 const cors = require("cors");
 const authRouter = require("./routers/authRouter");
+const organizmeRouter = require("./routers/organizmeRouter");
+const formationRouter = require("./routers/formationRouter");
 const ErrorHandler = require("./middlewares/errorHandling/errorHandling");
-const { post } = require("./routers/authRouter");
 
 app.use(
   cors({
@@ -17,6 +18,8 @@ app.use(
 
 app.use(express.json());
 app.use("/auth", authRouter);
+app.use("/organizme", organizmeRouter);
+// app.use("/formation", formationRouter);
 
 app.use(ErrorHandler);
 

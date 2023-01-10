@@ -1,0 +1,167 @@
+{
+	"tables": {
+		"da0fdd21-45c1-4bd0-b303-f5fc7831eefc": {
+			"id": "da0fdd21-45c1-4bd0-b303-f5fc7831eefc",
+			"visible": true,
+			"name": "users",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "a0cb5e7f-1a91-4cf3-820b-eb08466c3612",
+					"name": "_id",
+					"datatype": "ObjectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "24ebe7f1-af61-4385-9b86-91a65ea3d598",
+					"name": "email",
+					"datatype": "String",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "2403f2f4-8333-42b5-a7e8-347933923473",
+					"name": "password",
+					"datatype": "String",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "64011fe2-8b4d-4d3b-9279-7880f31e71cc",
+					"name": "role",
+					"datatype": "String",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "07a77e61-e4bd-412c-9030-627942dbeafc",
+					"name": "organisme",
+					"datatype": "String",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "9dcc38d2-495f-4f14-b15e-5f42e7934ac6",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "22ab53f6-fcf0-49a6-a7e3-d25d06e8a753",
+							"colid": "a0cb5e7f-1a91-4cf3-820b-eb08466c3612"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"others": ""
+		}
+	},
+	"relations": {},
+	"notes": {},
+	"lines": {},
+	"model": {
+		"name": "formation",
+		"id": "1529c30c-83b4-4845-995c-f94cb0f2cc24",
+		"activeDiagram": "27f17681-0a0b-4a47-8af0-b50e784fe68f",
+		"desc": "",
+		"path": "",
+		"type": "MONGOOSE",
+		"version": 1,
+		"parentTableInFkCols": true,
+		"caseConvention": "under",
+		"replaceSpace": "_",
+		"color": "transparent",
+		"sideSelections": true,
+		"isDirty": true,
+		"storedin": {
+			"major": 5,
+			"minor": 2,
+			"extra": 0
+		},
+		"embeddedInParentsIsDisplayed": true,
+		"schemaContainerIsDisplayed": false,
+		"cardinalityIsDisplayed": false,
+		"estimatedSizeIsDisplayed": false,
+		"writeFileParam": false,
+		"currentDisplayMode": "metadata",
+		"def_coltopk": true,
+		"def_others": ""
+	},
+	"otherObjects": {},
+	"diagrams": {
+		"27f17681-0a0b-4a47-8af0-b50e784fe68f": {
+			"name": "Main Diagram",
+			"description": "",
+			"id": "27f17681-0a0b-4a47-8af0-b50e784fe68f",
+			"keysgraphics": true,
+			"linegraphics": "detailed",
+			"zoom": 1,
+			"background": "transparent",
+			"lineColor": "transparent",
+			"isOpen": true,
+			"main": true,
+			"diagramItems": {
+				"da0fdd21-45c1-4bd0-b303-f5fc7831eefc": {
+					"referencedItemId": "da0fdd21-45c1-4bd0-b303-f5fc7831eefc",
+					"x": 181,
+					"y": 146,
+					"gHeight": 117,
+					"gWidth": 191,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				}
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"type": "erd"
+		}
+	},
+	"order": [],
+	"collapsedTreeItems": []
+}
