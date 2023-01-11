@@ -27,6 +27,17 @@ const add = async (req, res, next) => {
   }
 };
 
+const getOne = async (req, res, next) => {
+  const id  = req.params.id
+  try {
+    const oneOrganizme = await Organizme.findById({_id:id});
+    if (!oneOrganizme) throw new Error("This Organizme Not Found");
+    if (oneOrganizme) res.json({ success: true, organizme: oneOrganizme });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getAll = async (req, res, next) => {
   try {
     const allOrganizme = await Organizme.aggregate([
@@ -42,15 +53,33 @@ const getAll = async (req, res, next) => {
 const remove = async (req, res, next) => {
   const id = req.params.id;
   try {
-    const organizmeExist = await Organizme.deleteOne({ _id: id });
+    const organizmeExist = await Organizme.findByIdAndRemove({ _id: id });
     if (!organizmeExist) throw new Error("This Organizme not Found");
     if (organizmeExist) {
-      res.send("Organizme Deleted Success");
+      res.json({message:"Organizme Deleted Success"});
     }
   } catch (error) {
     next(error);
   }
 };
-const update = async (req, res, next) => {};
 
-module.exports = { add, getAll, remove, update };
+const update = async (req, res, next) => {
+  const id = req.params.id;
+  const errors = validationResult(req);
+  try {
+    if (errors.isEmpty()) {
+      const updateOrganizme = await Organizme.updateOne(
+        { _id: id },
+        { name: req.body.name }
+      );
+      if (!updateOrganizme) throw new Error("This Organizme Not Update");
+      if (updateOrganizme) {
+        res.json({message:"Update Success"});
+      }
+    }else throw new Error(errors.errors[0].msg)
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { add, getOne, getAll, remove, update };
