@@ -11,7 +11,7 @@ const Login = async (req, res, next) => {
       const user = await User.aggregate([
         { $match: { email: req.body.email } },
       ]);
-      if (user.length <= 0) throw new Error("Use Not Found");
+      if (user.length <= 0) throw new Error("User Not Found");
       if (user) {
         if (user[0].password === req.body.password) {
           const token = await jwt.sign(

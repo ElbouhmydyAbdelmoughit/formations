@@ -9,7 +9,6 @@ const add = async (req, res, next) => {
         { $match: { name: req.body.name } },
       ]);
       if (organismeExist.length <= 0) {
-        console.log("test");
         const organizme = await new Organizme({
           name: req.body.name,
         });
@@ -28,8 +27,30 @@ const add = async (req, res, next) => {
   }
 };
 
-const getAll = async (req, res, next) => {};
-const remove = async (req, res, next) => {};
+const getAll = async (req, res, next) => {
+  try {
+    const allOrganizme = await Organizme.aggregate([
+      { $project: { _id: 1, name: 1 } },
+    ]);
+    if (!allOrganizme) throw new Error("Organizme not found");
+    if (allOrganizme) res.json({ success: true, organizme: allOrganizme });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const remove = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const organizmeExist = await Organizme.deleteOne({ _id: id });
+    if (!organizmeExist) throw new Error("This Organizme not Found");
+    if (organizmeExist) {
+      res.send("Organizme Deleted Success");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 const update = async (req, res, next) => {};
 
 module.exports = { add, getAll, remove, update };

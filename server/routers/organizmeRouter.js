@@ -6,8 +6,8 @@ const {add,getAll,remove,update } = require("../controllers/organizmeController"
 organizmeRouter.post('/add',[
   check("name","Name is required").not().isEmpty()
 ],add)
-organizmeRouter.post('/add',getAll)
-organizmeRouter.post('/add',remove)
-organizmeRouter.post('/add',update)
+organizmeRouter.get('/',getAll)
+organizmeRouter.delete('/remove/:id',remove)
+organizmeRouter.post('/update/:id',update)
 
 module.exports = organizmeRouter
