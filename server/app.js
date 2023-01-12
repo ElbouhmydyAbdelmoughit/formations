@@ -19,7 +19,6 @@ app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/organizme", organizmeRouter);
 // app.use("/formation", formationRouter);
-
 app.use(ErrorHandler);
 
-module.exports = app
+module.exports = app;
