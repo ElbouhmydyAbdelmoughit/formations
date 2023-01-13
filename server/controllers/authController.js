@@ -1,10 +1,11 @@
 require("dotenv").config();
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
 const generator = require("generate-password");
 const Mailer = require("../utils/mailer/Mailer");
+const salt = bcrypt.genSaltSync(10);
 
 const Login = async (req, res, next) => {
   try {
@@ -14,8 +15,9 @@ const Login = async (req, res, next) => {
         { $match: { email: req.body.email } },
       ]);
       if (user.length <= 0) throw new Error("User Not Found");
-      if (user) {
-        if (user[0].password === req.body.password) {
+      if (user.length > 0) {
+        const password_compare = await bcrypt.compare(req.body.password,user[0].password)
+        if (password_compare) {
           const token = await jwt.sign(
             {
               name: user[0].name,
@@ -40,26 +42,38 @@ const Login = async (req, res, next) => {
 
 const add = async (req, res, next) => {
   try {
-    const userExist = await User.findOne({ email: req.body.email });
-    if (userExist) throw new Error("This User Already Exist");
-    if (!userExist) {
-      const password = generator.generate({
-        length: 12,
-        numbers: true,
-      });
-      console.log(password);
-      const createUser = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: password,
-      });
-      if (createUser) {
-        Mailer(password, req.body.email);
-        const userSaved = await createUser.save();
-        if (userSaved) {
-          res.send("User Created Success");
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      const userExist = await User.aggregate([
+        { $match: { email: req.body.email } },
+      ]);
+      if (userExist.length > 0) throw new Error("This User Already Exist");
+      if (userExist.length <= 0) {
+        const password = generator.generate({
+          length: 12,
+          numbers: true,
+        });
+        console.log(password);
+        const hash_password = await bcrypt.hash(password, salt);
+        if (hash_password) {
+          const createUser = await User.create({
+            name: req.body.name,
+            email: req.body.email,
+            password: hash_password,
+          });
+          if (createUser) {
+            Mailer(password, req.body.email);
+            const userSaved = await createUser.save();
+            if (userSaved) {
+              res.send("User Created Success");
+            }
+          }
+        } else {
+          throw new Error("Something Went Wrong in Password");
         }
       }
+    } else {
+      throw new Error(errors.errors[0].msg);
     }
   } catch (error) {
     next(error);

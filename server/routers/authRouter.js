@@ -17,7 +17,7 @@ authRouter.post(
 authRouter.post(
   "/add",
   [
-    check("name", "Nmail is Requered").trim().notEmpty(),
+    check("name", "Name is Requered").trim().notEmpty(),
     check("email", "Email is Requered").trim().notEmpty().isEmail(),
   ],
   add
