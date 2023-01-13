@@ -38,7 +38,7 @@ const Login = async (req, res, next) => {
   }
 };
 
-const addUser = async (req, res, next) => {
+const add = async (req, res, next) => {
   try {
     const userExist = await User.findOne({ email: req.body.email });
     if (userExist) throw new Error("This User Already Exist");
@@ -54,18 +54,17 @@ const addUser = async (req, res, next) => {
         password: password,
       });
       if(createUser){
-        res.send(createUser)
+        Mailer(password,req.body.email)
+        const userSaved = await createUser.save()
+        if(userSaved){
+
+          res.send('User Created Success')
+        }
       }
-      // if(createUser){
-      //   // Mailer(password,req.body.email)
-      //   console.log(createUser)
-      //   const test = await createUser.save()
-      //   res.send(test)
-      // }
     }
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { Login, addUser };
+module.exports = { Login, add };
