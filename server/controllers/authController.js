@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 // const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const generator = require("generate-password");
-const Mailer = require('../utils/mailer/Mailer')
+const Mailer = require("../utils/mailer/Mailer");
 
 const Login = async (req, res, next) => {
   try {
@@ -47,18 +47,17 @@ const add = async (req, res, next) => {
         length: 12,
         numbers: true,
       });
-      console.log(password)
+      console.log(password);
       const createUser = await User.create({
         name: req.body.name,
         email: req.body.email,
         password: password,
       });
-      if(createUser){
-        Mailer(password,req.body.email)
-        const userSaved = await createUser.save()
-        if(userSaved){
-
-          res.send('User Created Success')
+      if (createUser) {
+        Mailer(password, req.body.email);
+        const userSaved = await createUser.save();
+        if (userSaved) {
+          res.send("User Created Success");
         }
       }
     }
