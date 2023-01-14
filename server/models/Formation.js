@@ -10,7 +10,8 @@ const formationSchema = mongoose.Schema({
     required:[true,"Please Enter Description"]
   },
   image:{
-    type:String
+    type:String,
+    required:[true,"Please Add Image"]
   },
   dubet_date: {
     type: Date,

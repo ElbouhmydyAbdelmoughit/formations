@@ -1,8 +1,36 @@
-const Formation = require('../models/Formation')
+const Formation = require("../models/Formation");
+const { validationResult } = require("express-validator");
 
-const add = () =>{
-
-}
+const add = async (req, res, next) => {
+  const errors = validationResult(req);
+  try {
+    if (errors.isEmpty()) {
+      const formationExist = await Formation.aggregate([
+        { $match: { name: req.body.name } },
+      ]);
+      if (formationExist.length <= 0) {
+        const formation = await new Formation({
+          name: req.body.name,
+          description: req.body.description,
+          image: req.body.image,
+          dubet_date: new Date().toDateString(),
+          final_date: new Date().toDateString(),
+          organizme:req.body.organizme
+        });
+        if (formation) {
+          await formation.save();
+          res.send("Formation Created Success");
+        }
+      } else {
+        throw new Error("This Formation Aleardy Exist");
+      }
+    } else {
+      throw new Error(errors.errors[0].msg);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 
 const getAll = async (req, res, next) => {
   try {
@@ -17,9 +45,9 @@ const getAll = async (req, res, next) => {
 };
 
 const getOne = async (req, res, next) => {
-  const id  = req.params.id
+  const id = req.params.id;
   try {
-    const oneFormation = await Formation.findById({_id:id});
+    const oneFormation = await Formation.findById({ _id: id });
     if (!oneFormation) throw new Error("This Formation Not Found");
     if (oneFormation) res.json({ success: true, formation: oneFormation });
   } catch (error) {
@@ -27,12 +55,8 @@ const getOne = async (req, res, next) => {
   }
 };
 
-const remove = () =>{
-  
-}
+const remove = async (req, res, next) => {};
 
-const update = () =>{
-  
-}
+const update = async (req, res, next) => {};
 
-module.exports = {add, getAll, getOne, remove, update}
+module.exports = { add, getAll, getOne, remove, update };

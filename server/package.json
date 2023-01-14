@@ -25,8 +25,10 @@
     "jsonwebtoken": "^9.0.0",
     "local-storage": "^2.0.0",
     "mongoose": "^6.8.3",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.0",
     "nodemon": "^2.0.20",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "uuid": "^9.0.0"
   }
 }
