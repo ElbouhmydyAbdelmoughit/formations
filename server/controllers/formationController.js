@@ -13,9 +13,9 @@ const add = async (req, res, next) => {
           name: req.body.name,
           description: req.body.description,
           image: req.body.image,
-          dubet_date: new Date().toDateString(),
-          final_date: new Date().toDateString(),
-          organizme:req.body.organizme
+          dubet_date: req.body.dubet_date,
+          final_date: req.body.final_date,
+          organizme: req.body.organizme,
         });
         if (formation) {
           await formation.save();
@@ -34,8 +34,18 @@ const add = async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
   try {
-    const allFormation = await Organizme.aggregate([
-      { $project: { _id: 1, name: 1 } },
+    const allFormation = await Formation.aggregate([
+      {
+        $project: {
+          _id: 0,
+          name: 1,
+          description: 1,
+          image: 1,
+          dubet_date: 1,
+          final_date: 1,
+          organizme: 1,
+        },
+      },
     ]);
     if (!allFormation) throw new Error("Formation not found");
     if (allFormation) res.json({ success: true, formation: allFormation });
@@ -55,8 +65,43 @@ const getOne = async (req, res, next) => {
   }
 };
 
-const remove = async (req, res, next) => {};
+const remove = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const formationExist = await Formation.findByIdAndRemove({ _id: id });
+    if (!formationExist) throw new Error("This Formation not Found");
+    if (formationExist) {
+      res.json({ message: "Formation Deleted Success" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 
-const update = async (req, res, next) => {};
+const update = async (req, res, next) => {
+  const id = req.params.id;
+  const errors = validationResult(req);
+  try {
+    if (errors.isEmpty()) {
+      const updateFormation = await Formation.updateOne(
+        { _id: id },
+        {
+          name: req.body.name,
+          description: req.body.description,
+          image: req.body.image,
+          dubet_date:req.body.dubet_date,
+          final_date:req.body.final_date,
+          organizme:req.body.organizme
+        }
+      );
+      if (!updateFormation) throw new Error("This Formation Not Update");
+      if (updateFormation) {
+        res.json({ message: "Update Success" });
+      }
+    } else throw new Error(errors.errors[0].msg);
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = { add, getAll, getOne, remove, update };
