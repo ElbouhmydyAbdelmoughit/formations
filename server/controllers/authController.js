@@ -16,7 +16,10 @@ const Login = async (req, res, next) => {
       ]);
       if (user.length <= 0) throw new Error("User Not Found");
       if (user.length > 0) {
-        const password_compare = await bcrypt.compare(req.body.password,user[0].password)
+        const password_compare = await bcrypt.compare(
+          req.body.password,
+          user[0].password
+        );
         if (password_compare) {
           const token = await jwt.sign(
             {
