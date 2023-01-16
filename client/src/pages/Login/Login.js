@@ -3,6 +3,8 @@ import "./Login.css";
 import login from "../../assets/img/Login.jpg";
 import env from "react-dotenv";
 import toastGenerator from "../../helpers/toastGenerator";
+import axios from "axios"
+import { useNavigate } from "react-router-dom";
 import {
   MDBBtn,
   MDBContainer,
@@ -16,6 +18,7 @@ import {
 
 const Login = () => {
 
+  const navigate = useNavigate()
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [user, setUser] = useState({
     email: "",
@@ -27,7 +30,20 @@ const Login = () => {
   };
 
   const handleSubmit = (e) =>{
-    e.preventDefault()
+    e.preventDefault();
+    console.log(user)
+    axios
+      .post(`${BASE_URL}/auth/login`,{...user})
+      .then((user) => {
+        console.log(user.data.message)
+        if (user.data.message) {
+          toastGenerator("success", user.data.message);
+        } else toastGenerator("error", user.data);
+      })
+      .catch((error) => {
+        console.log('test')
+        console.log(error);
+      });
     
   }
 
