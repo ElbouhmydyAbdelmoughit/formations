@@ -14,7 +14,7 @@ describe("Testing For EndPoint Login", () => {
 describe("Testing For EndPoint Organizme", () => {
   test("Created Organizme", async () => {
     const res = await request(app).post("/organizme/add").send({
-      name: "Jest",
+      name: "Test",
     });
     expect(res.text).toBe("Organizme Created Success");
   });
@@ -28,7 +28,7 @@ describe("Testing For EndPoint Organizme", () => {
   });
   test("Remove One Organizme", async () => {
     const res = await request(app).delete(
-      "/organizme/remove/63bd8b7cfc16b8338c99a1b9"
+      "/organizme/remove/63c55ad5e9bb038860c8fda1"
     );
     expect(res.body.message).toBe("Organizme Deleted Success");
   });

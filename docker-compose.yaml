@@ -1,21 +1,22 @@
 
 version: '3'
 services:
-  nodejs-server:
+  api-server:
     build:
       context: ./server
     ports:
       - "1000:1000"
-    container_name: node-server
+    container_name: api-server
+    stdin_open: true
     volumes:
         - ./api:/usr/src/app/server
         - /usr/src/app/server/node_modules
-  react-ui:
+  react-app:
     build:
       context: ./client
     ports:
       - "3000:3000"
-    container_name: react-client
+    container_name: react-app
     stdin_open: true
     volumes:
         - ./api:/usr/src/client/api
